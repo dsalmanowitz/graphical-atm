@@ -74,6 +74,7 @@ public class HomeView extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source.equals(logoutButton)) {
+			manager.logout();
 			manager.switchTo(ATM.LOGIN_VIEW);
 		}
 		

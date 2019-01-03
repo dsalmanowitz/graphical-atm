@@ -3,8 +3,13 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+
+import javax.swing.text.MaskFormatter;
 
 import javax.swing.*;
 
@@ -21,12 +26,12 @@ public class CreateView extends JPanel implements ActionListener {
 	private JComboBox bdayBox;
 	private JComboBox monthBox;
 	private JComboBox yearBox;
-	private JTextField phoneField;
+	private JFormattedTextField phoneField;
 	private JTextField addressField;
 	private JComboBox stateBox;
 	private JTextField cityField;
-	private JTextField zipField;
-	private JTextField pinField;
+	private JFormattedTextField zipField;
+	private JFormattedTextField pinField;
 	
 	
 	/**
@@ -63,6 +68,13 @@ public class CreateView extends JPanel implements ActionListener {
 		firstNameLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
 		this.add(firstNameLabel);
 		firstNameField = new JTextField();
+		firstNameField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if (firstNameField.getText().length() >= 15) {
+					e.consume();
+				}
+			}
+		});
 		firstNameField.setBounds(140, 50, 200, 35);
 		this.add(firstNameField);
 		
@@ -72,6 +84,13 @@ public class CreateView extends JPanel implements ActionListener {
 		lastNameLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
 		this.add(lastNameLabel);
 		lastNameField = new JTextField();
+		lastNameField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if (lastNameField.getText().length() >= 20) {
+					e.consume();
+				}
+			}
+		});
 		lastNameField.setBounds(140, 90, 200, 35);
 		this.add(lastNameField);
 		
@@ -98,7 +117,13 @@ public class CreateView extends JPanel implements ActionListener {
 		phoneLabel.setLabelFor(phoneField);
 		phoneLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
 		this.add(phoneLabel);
-		phoneField = new JTextField();
+		try {
+			MaskFormatter phoneFormat = new MaskFormatter("(###) ###-####");
+			phoneFormat.setPlaceholderCharacter('_');
+			phoneField = new JFormattedTextField(phoneFormat);
+		} catch (ParseException e) {
+			phoneField.setText("");
+		}
 		phoneField.setBounds(140, 170, 200, 35);
 		this.add(phoneField);
 		
@@ -108,10 +133,24 @@ public class CreateView extends JPanel implements ActionListener {
 		lastNameLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
 		this.add(addressLabel);
 		addressField = new JTextField();
+		addressField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if (addressField.getText().length() >= 30) {
+					e.consume();
+				}
+			}
+		});
 		addressField.setBounds(140, 210, 200, 35);
 		this.add(addressField);
 		
 		cityField = new JTextField();
+		cityField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if (cityField.getText().length() >= 30) {
+					e.consume();
+				}
+			}
+		});
 		JLabel cityLabel = new JLabel("City", SwingConstants.RIGHT);
 		cityLabel.setLabelFor(cityField);
 		lastNameLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
@@ -129,7 +168,12 @@ public class CreateView extends JPanel implements ActionListener {
 		zipLabel.setLabelFor(zipField);
 		lastNameLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
 		this.add(addressLabel);
-		zipField = new JTextField();
+		try {
+			MaskFormatter zipFormat = new MaskFormatter("#####");
+			zipField = new JFormattedTextField(zipFormat);
+		} catch (ParseException e) {
+			zipField.setText("");
+		}
 		zipField.setBounds(375, 250, 50, 35);
 		this.add(zipLabel);
 		this.add(zipField);
@@ -138,8 +182,12 @@ public class CreateView extends JPanel implements ActionListener {
 		pinLabel.setBounds(30, 290, 95, 35);
 		pinLabel.setLabelFor(pinField);
 		pinLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
-		pinField = new JTextField();
-		pinField.setBounds(140, 290, 200, 35);
+		try {
+			MaskFormatter pinFormat = new MaskFormatter("####");
+			pinField = new JFormattedTextField(pinFormat);
+		} catch (ParseException e) {
+			pinField.setText("");
+		}		pinField.setBounds(140, 290, 200, 35);
 		this.add(pinLabel); 
 		this.add(pinField);
 		

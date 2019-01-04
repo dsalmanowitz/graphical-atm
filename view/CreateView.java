@@ -8,12 +8,11 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.ParseException;
-
 import javax.swing.text.MaskFormatter;
-
 import javax.swing.*;
-
 import controller.ViewManager;
+import model.BankAccount;
+import model.User;
 
 @SuppressWarnings("serial")
 public class CreateView extends JPanel implements ActionListener {
@@ -231,7 +230,12 @@ public class CreateView extends JPanel implements ActionListener {
 		if (source.equals(quitButton)) {
 			manager.switchTo(ATM.LOGIN_VIEW);
 		}
-		if (source.equals(submitButton)) {
+		else if (source.equals(submitButton)) {
+			//mmddyyyy
+			int month = 
+			Long phone = Long.parseLong(String.valueOf(phoneField.getText().substring(1, 4) + phoneField.getText().substring(6, 9) + phoneField.getText().substring(10, 14)));
+			User user = new User(Integer.parseInt(String.valueOf(pinField)), dob, phone, firstNameField.getText(), lastNameField.getText(), addressField.getText(), cityField.getText(), String.valueOf(stateBox.getSelectedItem()), zipField.getText());
+			manager.CreateAccount(user);
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 	}

@@ -98,7 +98,7 @@ public class CreateView extends JPanel implements ActionListener {
 		bdayLabel.setLabelFor(lastNameField);
 		bdayLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
 		this.add(bdayLabel);
-		String[] days = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+		String[] days = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
 		bdayBox = new JComboBox(days);
 		bdayBox.setBounds(140, 130, 50, 35);
 		this.add(bdayBox);
@@ -231,10 +231,48 @@ public class CreateView extends JPanel implements ActionListener {
 			manager.switchTo(ATM.LOGIN_VIEW);
 		}
 		else if (source.equals(submitButton)) {
-			//mmddyyyy
-			int month = 
+			String dob = "";
+			switch (String.valueOf(bdayBox.getSelectedItem())) {
+			case "January":
+				dob = "01";
+				break;
+			case "February":
+				dob = "02";
+				break;
+			case "March":
+				dob = "03";
+				break;
+			case "April":
+				dob = "04";
+				break;
+			case "May":
+				dob = "05";
+				break;
+			case "June":
+				dob = "06";
+				break;
+			case "July":
+				dob = "07";
+				break;
+			case "August":
+				dob = "08";
+				break;
+			case "September":
+				dob = "09";
+				break;
+			case "October":
+				dob = "10";
+				break;
+			case "November":
+				dob = "11";
+				break;
+			case "December":
+				dob = "12";
+				break;
+			}
+			dob += String.valueOf(bdayBox.getSelectedItem()) + String.valueOf(yearBox.getSelectedItem());
 			Long phone = Long.parseLong(String.valueOf(phoneField.getText().substring(1, 4) + phoneField.getText().substring(6, 9) + phoneField.getText().substring(10, 14)));
-			User user = new User(Integer.parseInt(String.valueOf(pinField)), dob, phone, firstNameField.getText(), lastNameField.getText(), addressField.getText(), cityField.getText(), String.valueOf(stateBox.getSelectedItem()), zipField.getText());
+			User user = new User(Integer.parseInt(String.valueOf(pinField)), Integer.parseInt(dob), phone, firstNameField.getText(), lastNameField.getText(), addressField.getText(), cityField.getText(), String.valueOf(stateBox.getSelectedItem()), zipField.getText());
 			manager.CreateAccount(user);
 			manager.switchTo(ATM.HOME_VIEW);
 		}

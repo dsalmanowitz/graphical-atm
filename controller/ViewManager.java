@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import data.Database;
 import model.BankAccount;
+import model.User;
 import view.ATM;
 import view.LoginView;
 
@@ -87,6 +88,11 @@ public class ViewManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void CreateAccount(User user) {
+		BankAccount account = new BankAccount('Y', db.getMaxAccountNumber()+1, 0.00, user);
+		db.insertAccount(account);
 	}
 	
 	public void logout() {

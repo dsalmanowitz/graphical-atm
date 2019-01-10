@@ -54,6 +54,7 @@ public class ViewManager {
 				lv.updateErrorMessage("");
 			}
 		}
+		
 	}
 	
 	/**
@@ -91,11 +92,27 @@ public class ViewManager {
 	}
 	
 	public void CreateAccount(User user) {
-		BankAccount account = new BankAccount('Y', db.getMaxAccountNumber()+1, 0.00, user);
+		account = new BankAccount('Y', db.getMaxAccountNumber()+1, 0.00, user);
 		db.insertAccount(account);
+	}
+	
+	public void deposit(double amount) {
+		account.deposit(amount);
+	}
+	
+	public void withdraw(double amount) {
+		account.withdraw(amount);
+	}
+	
+	public void transfer(BankAccount destination, double amount) {
+		account.transfer(destination, amount);
 	}
 	
 	public void logout() {
 		account = null;
+	}
+	
+	public BankAccount getAcc() {
+		return account;
 	}
 }

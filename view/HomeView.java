@@ -88,6 +88,13 @@ public class HomeView extends JPanel implements ActionListener {
 		this.add(balanceLabel);
 	}
 	
+	public void updateBalance() {
+		JLabel balanceLabel = new JLabel("");
+		balanceLabel = new JLabel("Current Balance: " + balance);
+		balanceLabel.setBounds(140, 270, 200, 25);
+		this.add(balanceLabel);
+	}
+	
 	/*
 	 * HomeView is not designed to be serialized, and attempts to serialize will throw an IOException.
 	 * 

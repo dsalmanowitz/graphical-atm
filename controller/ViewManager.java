@@ -10,6 +10,7 @@ import model.BankAccount;
 import model.User;
 import view.ATM;
 import view.LoginView;
+import view.HomeView;
 
 public class ViewManager {
 	
@@ -50,6 +51,8 @@ public class ViewManager {
 				lv.updateErrorMessage("Invalid account number and/or PIN.");
 			} else {
 				switchTo(ATM.HOME_VIEW);
+				HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+				hv.initInfo();
 				LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
 				lv.updateErrorMessage("");
 			}
@@ -94,6 +97,7 @@ public class ViewManager {
 	public void CreateAccount(User user) {
 		account = new BankAccount('Y', db.getMaxAccountNumber()+1, 0.00, user);
 		db.insertAccount(account);
+		login(String.valueOf(account.getAccountNumber()), String.valueOf(account.getUser().getPin()).toCharArray());
 	}
 	
 	public void deposit(double amount) {

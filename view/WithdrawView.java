@@ -92,7 +92,7 @@ public class WithdrawView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 		if (source.equals(submitButton)) {
 			double amount = Double.parseDouble(amountField.getText());
-			manager.deposit(amount);
+			manager.withdraw(amount);
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 		if (source.equals(quitButton)) {

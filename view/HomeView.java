@@ -8,9 +8,10 @@ import java.io.ObjectOutputStream;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 import controller.ViewManager;
+import model.BankAccount;
 
 @SuppressWarnings("serial")
 public class HomeView extends JPanel implements ActionListener {
@@ -20,6 +21,14 @@ public class HomeView extends JPanel implements ActionListener {
 	private JButton depositButton;
 	private JButton withdrawButton;
 	private JButton transferButton;
+	private JLabel accountNumberLabel;
+	private JLabel balanceLabel;
+	private JLabel nameLabel;
+	
+	private long accountNumber;
+	private double balance;
+	private String fname;
+	private String lname;
 	
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
@@ -43,12 +52,7 @@ public class HomeView extends JPanel implements ActionListener {
 	private void initialize() {
 		
 		this.setLayout(null);
-		
-		/*this.add(new javax.swing.JLabel("Account Number: " + manager.getAcc().getAccountNumber(), javax.swing.SwingConstants.CENTER));
-		this.add(new javax.swing.JLabel("First Name: " + manager.getAcc().getUser().getFirstName(), javax.swing.SwingConstants.CENTER));
-		this.add(new javax.swing.JLabel("Last Name: " + manager.getAcc().getUser().getLastName(), javax.swing.SwingConstants.CENTER));
-		this.add(new javax.swing.JLabel("Balance: " + manager.getAcc().getBalance(), javax.swing.SwingConstants.CENTER));
-		*/
+
 		depositButton = new JButton("Deposit");
 		depositButton.setBounds(140, 50, 200, 35);
 		depositButton.addActionListener(this);
@@ -67,8 +71,21 @@ public class HomeView extends JPanel implements ActionListener {
 		this.add(logoutButton);
 	}
 	
-	private void getInfo() {
+	public void initInfo() {
+		accountNumber = manager.getAcc().getAccountNumber();
+		balance = manager.getAcc().getBalance();
+		fname = manager.getAcc().getUser().getFirstName().trim();
+		lname = manager.getAcc().getUser().getLastName().trim();
 		
+		JLabel accountNumberLabel = new JLabel("Account Number: " + accountNumber);
+		accountNumberLabel.setBounds(140, 210, 200, 25);
+		this.add(accountNumberLabel);
+		JLabel nameLabel = new JLabel("Name: " + lname + ", " + fname);
+		nameLabel.setBounds(140, 240, 200, 25);
+		this.add(nameLabel);
+		JLabel balanceLabel = new JLabel("Current Balance: " + balance);
+		balanceLabel.setBounds(140, 270, 200, 25);
+		this.add(balanceLabel);
 	}
 	
 	/*

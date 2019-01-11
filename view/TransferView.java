@@ -61,24 +61,23 @@ public class TransferView extends JPanel implements ActionListener {
 		amountField.setBounds(140, 50, 200, 35);
 		this.add(amountField);
 		JLabel destinationLabel = new JLabel("Destination", SwingConstants.RIGHT);
-		destinationLabel.setBounds(30, 170, 95, 35);
+		destinationLabel.setBounds(30, 90, 95, 35);
 		destinationLabel.setLabelFor(destinationField);
 		this.add(destinationLabel);
 		try {
-			MaskFormatter phoneFormat = new MaskFormatter("(###) ###-####");
-			phoneFormat.setPlaceholderCharacter('_');
-			destinationField = new JFormattedTextField(phoneFormat);
+			MaskFormatter destinationFormat = new MaskFormatter("#########");
+			destinationField = new JFormattedTextField(destinationFormat);
 		} catch (ParseException e) {
 			destinationField.setText("");
 		}
-		destinationField.setBounds(140, 170, 200, 35);
+		destinationField.setBounds(140, 90, 200, 35);
 		this.add(destinationField);
 		submitButton = new JButton("Submit");
-		submitButton.setBounds(140, 90, 200, 35);
+		submitButton.setBounds(140, 130, 200, 35);
 		submitButton.addActionListener(this);
 		this.add(submitButton);
 		quitButton = new JButton("Quit");
-		quitButton.setBounds(140, 130, 200, 35);
+		quitButton.setBounds(140, 170, 200, 35);
 		quitButton.addActionListener(this);
 		this.add(quitButton);
 	}
@@ -115,7 +114,6 @@ public class TransferView extends JPanel implements ActionListener {
 		}
 		if (source.equals(quitButton)) {
 			manager.switchTo(ATM.HOME_VIEW);
-
 		}
 	}
 }

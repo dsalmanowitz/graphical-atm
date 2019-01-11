@@ -104,8 +104,8 @@ public class ViewManager {
 		account.withdraw(amount);
 	}
 	
-	public void transfer(BankAccount destination, double amount) {
-		account.transfer(destination, amount);
+	public void transfer(long destination, double amount) {
+		account.transfer(db.getAccount(destination), amount);
 	}
 	
 	public void logout() {

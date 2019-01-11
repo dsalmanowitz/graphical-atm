@@ -109,7 +109,8 @@ public class TransferView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 		if (source.equals(submitButton)) {
 			double amount = Double.parseDouble(amountField.getText());
-			manager.deposit(amount);
+			long destination = Long.parseLong(destinationField.getText());
+			manager.transfer(destination, amount);
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 		if (source.equals(quitButton)) {

@@ -42,7 +42,9 @@ public class ViewManager {
 	 */
 	
 	public void login(String accountNumber, char[] pin) {
-		String userPin = new String(pin);
+		switchTo(ATM.HOME_VIEW);
+		
+				String userPin = new String(pin);
 		
 		if (accountNumber != null && userPin != null && accountNumber.length() > 0 && userPin.length() > 0) {
 			account = db.getAccount(Long.valueOf(accountNumber), Integer.valueOf(new String(pin)));
@@ -59,7 +61,7 @@ public class ViewManager {
 			}
 		}
 		
-	}
+	} 
 	
 	/**
 	 * Switches the active (or visible) view upon request.
@@ -129,6 +131,16 @@ public class ViewManager {
 	
 	public void updateInfo() {
 		InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
-		iv.initLabels();
+		iv.updateLabels();
+	}
+	
+	public void updateInfo(String street, String city, String state, String zip, String currentpin, String pin, String phone) {
+		account.getUser().setStreetAddress(street);
+		account.getUser().setCity(city);
+		account.getUser().setState(state);
+		account.getUser().setZip(zip);
+		account.getUser().setPin(Integer.parseInt(currentpin), Integer.parseInt(pin));
+		InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
+		iv.updateLabels();
 	}
 }

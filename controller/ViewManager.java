@@ -11,6 +11,7 @@ import model.User;
 import view.ATM;
 import view.LoginView;
 import view.HomeView;
+import view.InformationView;
 
 public class ViewManager {
 	
@@ -102,14 +103,20 @@ public class ViewManager {
 	
 	public void deposit(double amount) {
 		account.deposit(amount);
+		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+		hv.updateBalance();
 	}
 	
 	public void withdraw(double amount) {
 		account.withdraw(amount);
+		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+		hv.updateBalance();
 	}
 	
 	public void transfer(long destination, double amount) {
 		account.transfer(db.getAccount(destination), amount);
+		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+		hv.updateBalance();
 	}
 	
 	public void logout() {
@@ -118,5 +125,10 @@ public class ViewManager {
 	
 	public BankAccount getAcc() {
 		return account;
+	}
+	
+	public void updateInfo() {
+		InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
+		iv.initLabels();
 	}
 }

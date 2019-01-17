@@ -19,13 +19,13 @@ import controller.ViewManager;
 public class InformationView extends JPanel implements ActionListener {
 	
 	private ViewManager manager;		// manages interactions between the views, model, and database
-	private JButton quitButton;
+	private JButton backButton;
 	private JButton editButton;
 	private JLabel accountNumberLabel;
 	private JLabel firstNameLabel;
 	private JLabel lastNameLabel;
+	private JLabel streetLabel;
 	private JLabel addressLabel;
-	private JLabel zipLabel;
 	private JLabel phoneLabel;
 	private JLabel bdayLabel;
 	
@@ -54,39 +54,50 @@ public class InformationView extends JPanel implements ActionListener {
 		
 		this.setLayout(null);
 		
+		JLabel InformationLabel = new JLabel("Account Information", SwingConstants.CENTER);
+		InformationLabel.setBounds(140, 10, 200, 35);
+		InformationLabel.setFont(new Font("DialogInput", Font.BOLD, 14));
+		this.add(InformationLabel);
+		
 		accountNumberLabel = new JLabel("Account Number: " + manager.getAcc().getAccountNumber());
-		accountNumberLabel.setBounds(30, 50, 95, 35);
+		accountNumberLabel.setBounds(140, 50, 200, 35);
 		this.add(accountNumberLabel);
 		firstNameLabel = new JLabel("First Name: " + manager.getAcc().getUser().getFirstName());
-		firstNameLabel.setBounds(30, 90, 95, 35);
+		firstNameLabel.setBounds(140, 90, 200, 35);
 		this.add(firstNameLabel);
 		lastNameLabel = new JLabel("Last Name: " + manager.getAcc().getUser().getLastName());
-		lastNameLabel.setBounds(30, 130, 95, 35);
+		lastNameLabel.setBounds(140, 130, 200, 35);
 		this.add(lastNameLabel);
 		bdayLabel = new JLabel("Birthday: " + manager.getAcc().getUser().getFormattedDob());
 		bdayLabel.setBounds(140, 170, 200, 35);
 		this.add(bdayLabel);
-		addressLabel = new JLabel("Address: " + manager.getAcc().getUser().getFormattedAddress());
-		addressLabel.setBounds(140, 210, 200, 35);
+		streetLabel = new JLabel("Address: " + manager.getAcc().getUser().getStreetAddress());
+		streetLabel.setBounds(140, 210, 200, 35);
+		this.add(streetLabel);
+		addressLabel = new JLabel(manager.getAcc().getUser().getFormattedAddress());
+		addressLabel.setBounds(198, 250, 200, 35);
 		this.add(addressLabel);
-		zipLabel = new JLabel("ZIP: " + manager.getAcc().getUser().getZip());
-		zipLabel.setBounds(140, 250, 200, 35);
-		this.add(zipLabel);
 		phoneLabel = new JLabel("Phone #: " + manager.getAcc().getUser().getFormattedPhone());
 		phoneLabel.setBounds(140, 290, 200, 35);
 		this.add(phoneLabel);
 	}
 	
+	public void updateLabels() {
+		streetLabel.setText("Address: " + manager.getAcc().getUser().getStreetAddress());
+		addressLabel.setText(manager.getAcc().getUser().getFormattedAddress());
+		phoneLabel.setText("Phone #: " + manager.getAcc().getUser().getFormattedPhone());
+	}
+	
 	private void initButtons() {
 		
 		editButton = new JButton("Edit");
-		editButton.setBounds(140, 130, 200, 35);
+		editButton.setBounds(140, 330, 200, 35);
 		editButton.addActionListener(this);
 		this.add(editButton);
-		quitButton = new JButton("Quit");
-		quitButton.setBounds(140, 130, 200, 35);
-		quitButton.addActionListener(this);
-		this.add(quitButton);
+		backButton = new JButton("Back");
+		backButton.setBounds(140, 370, 200, 35);
+		backButton.addActionListener(this);
+		this.add(backButton);
 	}
 	
 	
@@ -98,7 +109,7 @@ public class InformationView extends JPanel implements ActionListener {
 	 */
 	
 	private void writeObject(ObjectOutputStream oos) throws IOException {
-		throw new IOException("ERROR: The HomeView class is not serializable.");
+		throw new IOException("ERROR: The InformationView class is not serializable.");
 	}
 	
 	///////////////////// OVERRIDDEN METHODS //////////////////////////////////////////
@@ -116,7 +127,7 @@ public class InformationView extends JPanel implements ActionListener {
 		if (source.equals(editButton)) {
 			manager.switchTo(ATM.EDIT_VIEW);
 		}
-		if (source.equals(quitButton)) {
+		if (source.equals(backButton)) {
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 	}

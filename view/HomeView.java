@@ -21,6 +21,7 @@ public class HomeView extends JPanel implements ActionListener {
 	private JButton depositButton;
 	private JButton withdrawButton;
 	private JButton transferButton;
+	private JButton infoButton;
 	private JLabel accountNumberLabel;
 	private JLabel balanceLabel;
 	private JLabel nameLabel;
@@ -65,8 +66,12 @@ public class HomeView extends JPanel implements ActionListener {
 		transferButton.setBounds(140, 130, 200, 35);
 		transferButton.addActionListener(this);
 		this.add(transferButton);
+		infoButton = new JButton("View Info");
+		infoButton.setBounds(140, 170, 200, 35);
+		infoButton.addActionListener(this);
+		this.add(infoButton);
 		logoutButton = new JButton("Logout");
-		logoutButton.setBounds(140, 170, 200, 35);
+		logoutButton.setBounds(140, 210, 200, 35);
 		logoutButton.addActionListener(this);
 		this.add(logoutButton);
 	}
@@ -77,22 +82,19 @@ public class HomeView extends JPanel implements ActionListener {
 		fname = manager.getAcc().getUser().getFirstName().trim();
 		lname = manager.getAcc().getUser().getLastName().trim();
 		
-		JLabel accountNumberLabel = new JLabel("Account Number: " + accountNumber);
-		accountNumberLabel.setBounds(140, 210, 200, 25);
+		accountNumberLabel = new JLabel("Account Number: " + accountNumber);
+		accountNumberLabel.setBounds(140, 250, 200, 25);
 		this.add(accountNumberLabel);
-		JLabel nameLabel = new JLabel("Name: " + lname + ", " + fname);
-		nameLabel.setBounds(140, 240, 200, 25);
+		nameLabel = new JLabel("Name: " + lname + ", " + fname);
+		nameLabel.setBounds(140, 290, 290, 25);
 		this.add(nameLabel);
-		JLabel balanceLabel = new JLabel("Current Balance: " + balance);
-		balanceLabel.setBounds(140, 270, 200, 25);
+		balanceLabel = new JLabel("Current Balance: " + balance);
+		balanceLabel.setBounds(140, 330, 200, 25);
 		this.add(balanceLabel);
 	}
 	
 	public void updateBalance() {
-		JLabel balanceLabel = new JLabel("");
-		balanceLabel = new JLabel("Current Balance: " + balance);
-		balanceLabel.setBounds(140, 270, 200, 25);
-		this.add(balanceLabel);
+		balanceLabel.setText("Current Balance: " + manager.getAcc().getBalance());
 	}
 	
 	/*
@@ -124,15 +126,16 @@ public class HomeView extends JPanel implements ActionListener {
 		}
 		if (source.equals(depositButton)) {
 			manager.switchTo(ATM.DEPOSIT_VIEW);
-
 		}
 		if (source.equals(withdrawButton)) {
 			manager.switchTo(ATM.WITHDRAW_VIEW);
-
 		}
 		if (source.equals(transferButton)) {
 			manager.switchTo(ATM.TRANSFER_VIEW);
-
+		}
+		if (source.equals(infoButton)) {
+			manager.updateInfo();
+			manager.switchTo(ATM.INFORMATION_VIEW);
 		}
 	}
 }

@@ -12,6 +12,9 @@ import view.ATM;
 import view.LoginView;
 import view.HomeView;
 import view.InformationView;
+import view.DepositView;
+import view.WithdrawView;
+import view.TransferView;
 
 public class ViewManager {
 	
@@ -104,21 +107,51 @@ public class ViewManager {
 	}
 	
 	public void deposit(double amount) {
-		account.deposit(amount);
-		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
-		hv.updateBalance();
+		DepositView dv = ((DepositView) views.getComponents()[ATM.DEPOSIT_VIEW_INDEX]);
+		switch (account.deposit(amount)) {
+		case ATM.INVALID_AMOUNT: 
+			dv.updateErrorMessage("Cannot deposit non-positive number.");
+			break;
+		case ATM.SUCCESS:
+			HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+			hv.updateBalance();
+			break;
+		}
 	}
 	
 	public void withdraw(double amount) {
-		account.withdraw(amount);
-		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
-		hv.updateBalance();
+		WithdrawView wv = ((WithdrawView) views.getComponents()[ATM.WITHDRAW_VIEW_INDEX]);
+		switch (account.withdraw(amount)) {
+		case ATM.INVALID_AMOUNT: 
+			wv.updateErrorMessage("Cannot withdraw non-positive number.");
+			break;
+		case ATM.INSUFFICIENT_FUNDS:
+			wv.updateErrorMessage("Insufficient funds.");
+			break;
+		case ATM.SUCCESS:
+			HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+			hv.updateBalance();
+			break; 
+		}
 	}
 	
 	public void transfer(long destination, double amount) {
-		account.transfer(db.getAccount(destination), amount);
-		HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
-		hv.updateBalance();
+		TransferView tv = ((TransferView) views.getComponents()[ATM.TRANSFER_VIEW_INDEX]);
+		switch (account.transfer(db.getAccount(destination), amount)) {
+		case ATM.INVALID_AMOUNT: 
+			tv.updateErrorMessage("Cannot withdraw non-positive number.");
+			break;
+		case ATM.INSUFFICIENT_FUNDS:
+			tv.updateErrorMessage("Insufficient funds.");
+			break;
+		case ATM.ACCOUNT_NOT_FOUND:
+			tv.updateErrorMessage("Account not found.");
+			break;
+		case ATM.SUCCESS:
+			HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+			hv.updateBalance();
+			break; 
+		}
 	}
 	
 	public void logout() {

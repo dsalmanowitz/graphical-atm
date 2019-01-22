@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ public class WithdrawView extends JPanel implements ActionListener {
 	private JButton quitButton;
 	private JButton submitButton;
 	private JTextField amountField;
+	private JLabel errorMessageLabel;
 	
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
@@ -32,6 +34,7 @@ public class WithdrawView extends JPanel implements ActionListener {
 		super();
 		
 		this.manager = manager;
+		this.errorMessageLabel = new JLabel("", SwingConstants.CENTER);
 		initialize();
 	}
 	
@@ -64,6 +67,12 @@ public class WithdrawView extends JPanel implements ActionListener {
 		quitButton.setBounds(140, 130, 200, 35);
 		quitButton.addActionListener(this);
 		this.add(quitButton);
+
+		errorMessageLabel.setBounds(0, 240, 500, 35);
+		errorMessageLabel.setFont(new Font("DialogInput", Font.ITALIC, 14));
+		errorMessageLabel.setForeground(Color.RED);
+		
+		this.add(errorMessageLabel);
 	}
 	
 	
@@ -76,6 +85,10 @@ public class WithdrawView extends JPanel implements ActionListener {
 	
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 		throw new IOException("ERROR: The HomeView class is not serializable.");
+	}
+	
+	public void updateErrorMessage(String errorMessage) {
+		errorMessageLabel.setText(errorMessage);
 	}
 	
 	///////////////////// OVERRIDDEN METHODS //////////////////////////////////////////
